@@ -1,2 +1,27 @@
-# reverse_polish_notation
-A C program that creates graphs of mathematical functions calculated using the Dijkstra algorithm and reverse Polish notation.
+# Reverse Polish Notation (RPN) Calculator
+This project is a calculator that evaluates mathematical expressions written in Reverse Polish Notation (RPN). It also supports plotting graphs for functions. The project is implemented in the C programming language.
+# What is Reverse Polish Notation?
+Reverse Polish Notation (RPN) is a mathematical notation in which operators follow their operands. For example:
+1. Input: 3 + 4             RPN:3 4 +
+2. Input: (1 + 2) * 4 + 3   RPN: 1 2 + 4 * 3 +
+Learn more about RPN on https://ru.wikipedia.org/wiki/Обратная_польская_запись
+# How to Use
+1. Enter an math expression.
+Example: sin(x) * cos(x/2)
+2. The program will evaluate the expression and print the result or plot the graph.
+# Supported operations:
+- Basic arithmetic: +, -, *, /, unary minus
+- Trigonometric functions: sin(), cos(), tg(), ctg()
+- Logarithmic functions: ln()
+- Square root: sqrt()
+
+# Build and Run
+1. git clone https://github.com/veranemoloko/reverse_polish_notation.git
+2. cd reverse_polish_notation 
+3. make
+4. ./graph
+
+![Снимок экрана 2025-03-19 170834](https://github.com/user-attachments/assets/1fd9a52c-09d6-43df-a8d6-17aeb5b29717)
+
+
+
