@@ -44,12 +44,11 @@ void printGraph(char fieldGraph[][WIDHT]) {
 }
 
 ErrTypes draw(const Units polishNotation, const char *exp) {
-    int err = 0;
     char fieldGraph[HIGHT][WIDHT] = {0};
     for (int i = 0; i < WIDHT; i++) {
         double x = ((double)MAX_X / ((double)WIDHT - 1)) * ((double)i);
         double y;
-        err = polishCalculate(polishNotation, x, &y);
+        ErrTypes err = polishCalculate(polishNotation, x, &y);
         if (err) return err;
         if (y <= MAX_Y && y >= MIN_Y) {
             int j = (int)round((MAX_Y - y) / (MAX_Y - MIN_Y) * (HIGHT - 1));
