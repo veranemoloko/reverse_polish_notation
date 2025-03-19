@@ -86,5 +86,8 @@ ErrTypes polishCalculate(const Units units, double x, double *y) {
     if (resUnits.numbers.length != 1) return err;
     *y = resUnits.numbers.data[0];
 
+    free(resUnits.numbers.data);
+    free(resUnits.tokens.data);
+
     return 0;
 }

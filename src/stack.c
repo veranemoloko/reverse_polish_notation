@@ -43,8 +43,11 @@ ErrTypes algDijkstra(Tokens *tokens) {
 
     size_t opCnt = 0;
     MathToken *operStack = malloc(sizeof(MathToken) * tokens->length);
-    free(outStack);
-    if (operStack == NULL) return MEM_ALG_ERR;
+
+    if (operStack == NULL) {
+        free(outStack);
+        return MEM_ALG_ERR;
+    }
 
     for (size_t i = 0; i < tokens->length; i++) {
         if (tokens->data[i] == X) {
