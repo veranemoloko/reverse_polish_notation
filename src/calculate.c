@@ -29,18 +29,16 @@ ErrTypes calculateBinary(Numbers *numbers, double (*op)(double, double)) {
 
 ErrTypes polishCalculate(const Units units, double x, double *y) {
     Units resUnits = unitsNew();
-    ErrTypes err = OK;
+    ErrTypes err;
     size_t j = 0;
     for (size_t i = 0; i < units.tokens.length; i++) {
         switch (units.tokens.data[i]) {
             case NUMBER: {
                 err = numbersAdd(&resUnits.numbers, units.numbers.data[j++]);
-                if (err) return MEM_ERR;
                 continue;
             }
             case X: {
                 err = numbersAdd(&resUnits.numbers, x);
-                if (err) return MEM_ERR;
                 continue;
             }
             case OP_ADD:
@@ -81,13 +79,12 @@ ErrTypes polishCalculate(const Units units, double x, double *y) {
             case R_PAREN:
                 break;
         }
-        if (err) return err;
     }
-    if (resUnits.numbers.length != 1) return err;
+    if (resUnits.numbers.length != 1) err = CALC_VALID_ERR;
     *y = resUnits.numbers.data[0];
 
     free(resUnits.numbers.data);
     free(resUnits.tokens.data);
 
-    return 0;
+    return err ? err : OK;
 }

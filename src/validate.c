@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "errType.h"
+
 int isOperator(char ch) {
     char operators[4] = {'+', '-', '*', '/'};
     for (size_t i = 0; i < 4; i++) {
@@ -44,29 +46,39 @@ int parens_balance(int *balance, char ch) {
     return 0;
 }
 
-int isValidExp(const char *exp) {
+ErrTypes isValidExp(const char *exp) {
+    ErrTypes err = OK;
     int balance_pars = 0;
     size_t len = strlen(exp);
 
     for (size_t i = 0; i < len; i++) {
+        size_t i_l_paren = 0;
+        size_t i_r_paren = 0;
         if (exp[i] == '(' || exp[i] == ')') {
-            if (parens_balance(&balance_pars, exp[i])) return 1;
+            if (parens_balance(&balance_pars, exp[i])) err = VALID_ERR;
+            if (exp[i] == '(')
+                i_l_paren = i;
+            else
+                i_r_paren = i;
+            if (i_r_paren - i_l_paren == 1) err = VALID_ERR;
             continue;
         } else if (exp[i] == 'x' || exp[i] == ' ')
             continue;
         else if (isOperator(exp[i]))
             continue;
         else if (isalpha(exp[i])) {
-            if (is_valid_func(&i, exp)) return 1;
+            if (is_valid_func(&i, exp)) err = VALID_ERR;
             continue;
         } else if (isdigit(exp[i])) {
-            if (is_valid_dot_double(&i, exp)) return 1;
+            if (is_valid_dot_double(&i, exp)) err = VALID_ERR;
             continue;
         } else if (exp[i] == '.')
-            return 1;
-        else
-            return 1;
+            err = VALID_ERR;
+        else {
+            err = VALID_ERR;
+        }
     }
-    if (balance_pars != 0) return 1;
-    return 0;
+    if (balance_pars != 0) err = VALID_ERR;
+
+    return err ? VALID_ERR : OK;
 }

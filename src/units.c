@@ -20,7 +20,7 @@ Units unitsNew() {
 
 ErrTypes unitsInit(char *exp, Units *units) {
     int err = isValidExp(exp);
-    if (err) return VALID_ERR;
+    if (err) return err;
     err = tokenize(exp, &units->tokens, &units->numbers);
     if (err) return err;
     return OK;

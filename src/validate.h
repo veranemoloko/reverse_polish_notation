@@ -1,7 +1,9 @@
 #ifndef VALIDATE_H
 #define VALIDATE_H
 
-int isValidExp(const char *);
+#include "errType.h"
+
+ErrTypes isValidExp(const char *);
 int isOperator(char);
 
 #endif

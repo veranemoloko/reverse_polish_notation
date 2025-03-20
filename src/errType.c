@@ -5,28 +5,28 @@
 void printErr(ErrTypes errEnum) {
     switch (errEnum) {
         case MEM_ERR:
-            printf("Err memory allocate\n");
+            printf("Error: Memory allocation failed.\n");
             break;
         case MEM_INPUT_ERR:
-            printf("----Err memory allocate in Input function----\n");
+            printf("Error: Memory allocation failed in the input function.\n");
             break;
         case MEM_ALG_ERR:
-            printf("----Err memory allocate in algoritm Dijkstra function----\n");
+            printf("Error: Memory allocation failed in the Dijkstra algorithm function.\n");
             break;
         case MEM_TOKENS_ADD_ERR:
-            printf("----Err memory allocate in push stack tokens----\n");
+            printf("Error: Memory allocation failed while pushing tokens to the stack.\n");
             break;
         case MEM_NUMBERS_ADD_ERR:
-            printf("----Err memory allocate in push stack numbers----\n");
+            printf("Error: Memory allocation failed while pushing numbers to the stack.\n");
             break;
         case VALID_ERR:
-            printf("----Expression is't validate----\n");
+            printf("Error: The expression is invalid.\n");
             break;
         case VALID_NUMBERS_ERR:
-            printf("----Numbers in expression is't validate----\n");
+            printf("Error: Invalid numbers in the expression.\n");
             break;
         case CALC_VALID_ERR:
-            printf("----Expression is't validate for colapse stack----\n");
+            printf("Error: The expression is invalid for stack evaluation.\n");
             break;
         case OK:
             break;

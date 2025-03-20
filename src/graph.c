@@ -38,8 +38,10 @@ int main() {
         free(exp);
         exit(1);
     }
+
     free(units.numbers.data);
     free(units.tokens.data);
     free(exp);
+
     return 0;
 }

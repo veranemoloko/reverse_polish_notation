@@ -19,20 +19,20 @@ int comPriority(MathToken a, MathToken b) {
     return a - b;
 }
 
-void popStack(MathToken *outStack, size_t *outCnt, MathToken *opStack, size_t *opCnt) {
-    if (opStack[*opCnt] == L_PAREN) return;
-    while (opStack[*opCnt] != L_PAREN) {
-        outStack[(*outCnt)++] = opStack[(*opCnt)--];
+void popStack(MathToken *outStack, size_t *outCnt, MathToken *opStack, size_t *operCnt) {
+    if (opStack[*operCnt] == L_PAREN) return;
+    while (opStack[*operCnt] != L_PAREN) {
+        outStack[(*outCnt)++] = opStack[(*operCnt)--];
     }
 }
 
-void pushStack(MathToken *outStack, size_t *outCnt, MathToken *opStack, size_t *opCnt, MathToken token) {
-    int resComp = comPriority(token, opStack[(*opCnt) - 1]);
+void pushStack(MathToken *outStack, size_t *outCnt, MathToken *opStack, size_t *operCnt, MathToken token) {
+    int resComp = comPriority(token, opStack[(*operCnt) - 1]);
     if (resComp <= 0) {
-        outStack[(*outCnt)++] = opStack[(*opCnt) - 1];
-        opStack[(*opCnt) - 1] = token;
+        outStack[(*outCnt)++] = opStack[(*operCnt) - 1];
+        opStack[(*operCnt) - 1] = token;
     } else {
-        opStack[(*opCnt)++] = token;
+        opStack[(*operCnt)++] = token;
     }
 }
 
@@ -41,9 +41,8 @@ ErrTypes algDijkstra(Tokens *tokens) {
     MathToken *outStack = malloc(sizeof(MathToken) * tokens->length);
     if (outStack == NULL) return MEM_ALG_ERR;
 
-    size_t opCnt = 0;
+    size_t operCnt = 0;
     MathToken *operStack = malloc(sizeof(MathToken) * tokens->length);
-
     if (operStack == NULL) {
         free(outStack);
         return MEM_ALG_ERR;
@@ -55,27 +54,27 @@ ErrTypes algDijkstra(Tokens *tokens) {
         } else if (tokens->data[i] == NUMBER) {
             outStack[outCnt++] = NUMBER;
         } else if (tokens->data[i] == L_PAREN) {
-            operStack[opCnt++] = L_PAREN;
+            operStack[operCnt++] = L_PAREN;
         } else if (tokens->data[i] == R_PAREN) {
-            opCnt--;
-            popStack(outStack, &outCnt, operStack, &opCnt);
+            operCnt--;
+            popStack(outStack, &outCnt, operStack, &operCnt);
         } else {
-            if (opCnt > 0) {
-                if (operStack[opCnt - 1] == L_PAREN) {
-                    operStack[opCnt++] = tokens->data[i];
+            if (operCnt > 0) {
+                if (operStack[operCnt - 1] == L_PAREN) {
+                    operStack[operCnt++] = tokens->data[i];
                     continue;
                 }
-                pushStack(outStack, &outCnt, operStack, &opCnt, tokens->data[i]);
+                pushStack(outStack, &outCnt, operStack, &operCnt, tokens->data[i]);
                 continue;
             }
-            operStack[opCnt++] = tokens->data[i];
+            operStack[operCnt++] = tokens->data[i];
         }
     }
-    if (opCnt > 0) {
-        for (size_t i = opCnt; i > 0; i--) {
+
+    if (operCnt > 0) {
+        for (size_t i = operCnt; i > 0; i--) {
             outStack[outCnt++] = operStack[i - 1];
         }
-        outStack[outCnt] = operStack[0];
     }
 
     for (size_t i = 0; i < outCnt; i++) {

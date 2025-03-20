@@ -21,4 +21,17 @@ clean:
 
 rebuild: clean all
 
-.PHONY: all clean
+clang-format:
+	@echo "\n\033[0;34mmake clang-format\033[0m"
+	find . -type f \( -name "*.c" -o -name "*.h" \) -exec clang-format -style=file -n {} +
+
+cppcheck:
+	@echo "\n\033[0;34mmake cppcheck\033[0m"
+	cppcheck --enable=all --suppress=missingIncludeSystem src/
+
+run:
+	@echo "\n\033[0;34mmake run (using valgrind):\033[0m"
+	valgrind --tool=memcheck --leak-check=yes ./$(TARGET)
+
+
+.PHONY: all clean cppchek
